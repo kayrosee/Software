@@ -3,14 +3,11 @@ package Software;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import models.GuestBookEntry;
 
 /**
  * Servlet implementation class MainMenu
@@ -31,8 +28,7 @@ public class MainMenu extends HttpServlet {
 		out.println("<head>");
 		out.println("	<meta charset=\"UTF-8\">");
 		out.println("	<title>Main Menu</title>");
-		out.println(
-				"	<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">");
+		out.println("	<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">");
 		out.println("</head>");
 		out.println("<body>");
 		out.println("<div class=\"container\">");
@@ -48,6 +44,8 @@ public class MainMenu extends HttpServlet {
 		out.println("</div>");
 		out.println("</body>");
 		out.println("</html>");
+		
+		//Will Make Servlet for Deliverer
 
 	}
 
