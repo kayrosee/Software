@@ -3,15 +3,12 @@ package Software;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import lab5.TodoEntry;
 
 /**
  * Servlet implementation class CarlsJr
@@ -41,8 +38,7 @@ public class CarlsJr extends HttpServlet {
 
 		// Read our entries from the Servlet Context
 		ServletContext context = this.getServletContext();
-		ArrayList<CarlsMealEntry> carlsMealEntries = (ArrayList<CarlsMealEntry>) getServletContext()
-				.getAttribute("carlsMealEntries");
+		ArrayList<CarlsMealEntry> carlsMealEntries = (ArrayList<CarlsMealEntry>) getServletContext().getAttribute("carlsMealEntries");
 
 		// Burgers
 		out.println("<p>Type of Burger:</p>");
@@ -52,8 +48,8 @@ public class CarlsJr extends HttpServlet {
 		out.println("<option value=\"Cheese Burger\">");
 		out.println("<option value =\"Bacon Burger\">");
 		out.println("<option value =\"Hamburger\"></datalist>");
-		out.println("<input type =\"submit\" value =\"confirm\">");
-		out.println("</form>");
+		//out.println("<input type =\"submit\" value =\"confirm\">");
+		//out.println("</form>");
 
 		//Sides
 		out.println("<p>Type of Sides:</p>");
@@ -61,9 +57,9 @@ public class CarlsJr extends HttpServlet {
 		out.println("<input type=\"text\" list =\"sides\">");
 		out.println("<datalist id =\"sides\" name=\"Sides:\">");
 		out.println("<option value=\"Fries\">");
-		out.println("<option value =\"Crisp Cut Friens\"></datalist>");
-		out.println("<input type =\"submit\" value =\"confirm\">");
-		out.println("</form>");
+		out.println("<option value =\"Crisp Cut Fries\"></datalist>");
+		//out.println("<input type =\"submit\" value =\"confirm\">");
+		//out.println("</form>");
 		
 		out.println("<p>Type of Drinks:</p>");
 		out.println("<form action=\"action_form.php\" method=\"get\">");
@@ -79,22 +75,15 @@ public class CarlsJr extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String meals = request.getParameter("burgers");
-
-		if (meals != null && meals.trim().length() > 0) {
-
-			ArrayList<TodoEntry> todoEntries = (ArrayList<TodoEntry>) getServletContext().getAttribute("todoEntries");
-
-			// Add a new Entry to the guest book using the name and message that were
-			// submitted
-
-			todoEntries.add(new TodoEntry(meals));
+		String burger = request.getParameter("burgers");
+		String sides = request.getParameter("sides");
+		String drinks = request.getParameter("drinks");
+		
+		ArrayList<CarlsMealEntry> carlsMealEntries = (ArrayList<CarlsMealEntry>) getServletContext().getAttribute("carlsMealEntries");
+			carlsMealEntries.add(new CarlsMealEntry(burger, sides, drinks));
 
 			// Send the User (Client) back to the GuestBook page
-			response.sendRedirect("Todo");
-		} else
-			doGet(request, response);
+			response.sendRedirect("CarlsJr");
 
 	}
-
 }
