@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+
 /**
  * Servlet implementation class RestaurantSelection
  */
@@ -22,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class FoodSelection extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public static String rName;
+	public static ShoppingCart cart;
     
 	private String getName(String name) {
 		//Get name of restaurant
@@ -37,6 +39,18 @@ public class FoodSelection extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		
+		//Get reference to shopping cart
+		if (cart != null) {
+			System.out.println("cart isn't null, grabbing cart reference in Food Selection");
+			cart = (ShoppingCart)getServletContext().getAttribute("cart");
+		}
+		if (cart == null) { 
+			System.out.println("cart is null, making a new cart in food Selection");
+			cart = new ShoppingCart();
+		}
+
+		//Store shopping cart data in Applications Scope (ServletContext)
+		getServletContext().setAttribute("cart", cart);
 	}
 	
 	
@@ -45,6 +59,9 @@ public class FoodSelection extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 
+		
+		System.out.println("Cart is: " + cart.getCart());
+		
 		//String rName = "Restaurant";
 		rName = request.getParameter("name");
 		
@@ -71,7 +88,6 @@ public class FoodSelection extends HttpServlet {
 
 		// Read our entries from the Servlet Context
 
-		String space = "\t\t\t";
 		out.print("<h1>Choose the + to add items to your cart</h1>");
 		out.println("<table class=\"table table-bordered table-striped table-hover\">"
 				+ "<tr>"
@@ -82,10 +98,12 @@ public class FoodSelection extends HttpServlet {
 		
 		for (int i=0; i<foods.size(); i++) {
 			out.println("<tr>"
+					+ " 	<form action=\"RestaurantSelection\" method=\"post\">"
 					+ "		<td>" + foods.get(i).name + "</td>"
-					+ "		<td>" + foods.get(i).cost + "</td>"	
-					+ "		<td align = \"center\">	<a href=\"test\">+	</td>"
-					+ "		<br>"
+					+ "		<td>" + foods.get(i).cost + "</td>"
+//					+ "		<td align = \"center\">	<a href=\"AddItem\">+	</td>"
+					+ " 	<td> <input type=\"submit\" name=\"submitBtn\" value=\"AddItem\"> </td>"
+					+ "		</form>"
 					+ "	</tr>");
 		}
 		out.println("</table>");
@@ -96,7 +114,24 @@ public class FoodSelection extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<CarlsMealEntry> carlsMealEntries = (ArrayList<CarlsMealEntry>) getServletContext().getAttribute("carlsMealEntries");
+//		ArrayList<CarlsMealEntry> carlsMealEntries = (ArrayList<CarlsMealEntry>) getServletContext().getAttribute("carlsMealEntries");
+		
+		//Reads values if name and message from request
+		Food foods = new Food("Carl's", "BUrger", "$2.00");
+//		String name = request.getParameter("name");
+//		String message = request.getParameter("message");
+		
+		//Get reference to guestbook
+//		ArrayList<GuestBookEntry> gbes = (ArrayList<GuestBookEntry>) getServletContext().getAttribute("gbe");
+//		cart = (ShoppingCart)getServletContext().getAttribute("cart");
+		
+		//Add new entry
+//		gbes.add(new GuestBookEntry(name, message));
+		cart.addItem(foods);
+		System.out.println(foods.getName() + " Added");
+		
+		//Store shopping cart data in Applications Scope (ServletContext)
+		getServletContext().setAttribute("cart", cart);
 		
 		//Send User back to main page
 		response.sendRedirect("RestaurantSelection");
@@ -119,7 +154,7 @@ public class FoodSelection extends HttpServlet {
 			Scanner data = new Scanner(in);
 
 			//Header
-			System.out.println(data.nextLine());
+			data.nextLine();
 			
 			//Prepopulate the list with names 
 			int counter = 0;

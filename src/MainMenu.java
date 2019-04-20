@@ -34,17 +34,18 @@ public class MainMenu extends HttpServlet {
 		out.println("	<h1>Person Selection:</h1>");
 
 		// Customer
-		out.println("	<form action=\"Customer\" method=\"post\">");
+		out.println("	<form action=\"RestaurantSelection\" method=\"post\">");
 		out.println("	<input class=\"btn btn-primary\" type=\"submit\" name=\"submitBtn\" value=\"Customer\">");
 		out.println("	</form><br>");
 
-		out.println("	<input class=\"btn btn-primary\" type=\"submit\" name=\"submitBtn\" value=\"Deliverer\">");
+		out.println("	<input class=\"btn btn-primary\" type=\"submit\" name=\"submitBtn\" value=\"Runner\">");
 
 		out.println("</div>");
 		out.println("</body>");
 		out.println("</html>");
 		
 		//Will Make Servlet for Deliverer
+		System.out.println("testing");
 
 	}
 
